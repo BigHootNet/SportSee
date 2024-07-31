@@ -1,0 +1,119 @@
+.content-container {
+    padding: 40px 75px;
+
+    .main-content {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+        .charts {
+            width: 70%; /* Limite la largeur des graphiques à 60% */
+            display: flex;
+            flex-direction: column;
+
+            .UserActivityChartContainer {
+                background-color: #FBFBFB;
+                border-radius: 10px;
+                padding: 30px;
+                width: 100%;
+            }
+
+            .chartsContainer {
+                display: grid;
+                gap: 3vw;
+                margin-left: 2vw;
+                grid-template-columns: 1fr 1fr 1fr;
+                width: 100%;
+                height: 250px;
+                justify-content: center;
+                align-items: center;
+                justify-items: center;
+
+                .recharts-responsive-container {
+                    flex-grow: 1;
+                }
+            }
+        }
+
+        .globalKeyDataContainer {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%; /* Adjust this height to match the height of the charts */
+            gap: 8vh; /* Space between the key data items */
+            align-items: flex-start; /* Align items to the left */
+            width: 20%; /* Occupe le reste de l'espace disponible */
+            margin-left: 8vw;
+            margin-right: 2vw;
+        }
+    }
+
+    .keyDataContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        background-color: #FBFBFB;
+        border-radius: 5px;
+        padding: 20px;
+    }
+
+    .keyDataItem {
+        display: flex;
+        align-items: center;
+        background-color: #FBFBFB;
+        border-radius: 5px;
+        padding: 10px;
+        min-width: 100%;
+        min-height: 10vh;
+        padding-left: 40px;
+    }
+
+    .iconContainer {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 10px;
+        border-radius: 5px;
+
+        img {
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    .calorieIcon {
+        background-color: #ff000015;
+    }
+
+    .proteinIcon {
+        background-color: rgba(74, 184, 255, 0.064);
+    }
+
+    .carbIcon {
+        background-color: #f9ce231e;
+    }
+
+    .lipidIcon {
+        background-color: rgba(253, 81, 130, 0.064);
+    }
+
+    .textContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 1vw;
+    }
+
+    .value {
+        font-weight: bold;
+        color: #000;
+    }
+
+    .label {
+        margin: 0;
+        font-weight: normal;
+        color: #74798C;
+    }
+}

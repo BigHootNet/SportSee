@@ -1,0 +1,213 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    max-width: 100%;
+    max-height: 1024px;
+    margin: auto;
+}
+
+header {
+    background-color: #000000;
+    display: flex;
+    justify-content: space-between;
+    gap: 2vw;
+    z-index: 999;
+    height: 91px;
+
+    img {
+        z-index: 2;
+        margin: auto;
+        margin-left: 28px;
+        width: 178px;
+        height: 60.93px;
+    }
+
+    nav {
+        flex: 1;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+
+        a {
+            text-decoration: none;
+            color: #FFFFFF;
+            font-size: 24px;
+            font-weight: 500;
+        }
+    }
+}
+
+.lefSideBar {
+    position: absolute;
+    width: 117px;
+    height: 100vh;
+    background-color: #000000;
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10vh;
+
+    &-buttons {
+        gap: 2vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &-text {
+        writing-mode: vertical-lr;
+        transform: rotate(180deg);
+        margin: 7vh 0;
+        font-size: 12px;
+        font-weight: 500;
+    }
+}
+
+main {
+    margin-left: 117px;
+    height: 100%;
+}
+
+.home  {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &-text {
+        margin: auto;
+        width: 90%;
+        margin-bottom: 2vh;
+
+        &-p {
+            margin-bottom: 4vh;
+        }
+
+        &-name {
+            color: #FF0101;
+        }
+    }
+
+    &-title {
+        font-size: 48px;
+        margin-top: 3vh;
+        margin-bottom: 3vh;
+    }
+}
+
+.dashboard {
+    width: 90%;
+    display: flex;
+    margin: auto;
+    gap: 3vw;
+    height: 60vh;
+    margin-top: 2vh;
+
+    &-user {
+        flex: 2.8;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 3vh;
+    }
+
+    &-infos {
+        flex: 1;
+
+        .cards {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 3vh;
+
+            .card {
+                flex: 1;
+                padding-left: 10px;
+                background-color: #FBFBFB;
+                border-radius: 5px;
+                list-style-type: none;
+                display: flex;
+                align-items: center;
+
+                button {
+                    margin: 1vw;
+                }
+            }
+        }
+
+        .infos-btn {
+            &-value {
+                margin: 10px;
+                font-size: 20px;
+                font-weight: 700;
+                color: #282D30;
+            }
+
+            &-title {
+                margin: 10px;
+                font-size: 14px;
+                color: #74798C;
+            }
+        }
+    }
+
+    &-graphs {
+        display: flex;
+        flex: 1.1;
+        gap: 1vw;
+
+        .graph {
+            flex: 1;
+        }
+    }
+}
+
+.button-with-icon {
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 7px;
+}
+
+.login {
+    margin-top: 100px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin-left: 117px;
+    font-size: 26px;
+  
+    gap: 3vh;
+    a {
+        color: #FF0000;
+        font-size: 20px;
+        text-decoration: none;
+    }
+    ul {
+        display: flex;
+        justify-content: center;
+        gap: 3vw;
+    }
+
+    li {
+        list-style-type: none;
+    }
+}
+
+.error {
+    margin-top: 100px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin-left: 117px;
+    font-size: 26px;
+  
+    gap: 3vh;
+    a {
+        color: #FF0000;
+        font-size: 20px;
+        text-decoration: none;
+    }
+}

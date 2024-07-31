@@ -1,0 +1,44 @@
+.custom-bar-chart-container {
+    width: 100%;
+  }
+  
+  .chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .chart-title {
+    margin-bottom: -3vh; /* Supprime la marge par défaut */
+  }
+  
+  .barChart-tooltip {
+    background-color: #E60000;
+    padding: 10px;
+    border-radius: 5px;
+    color: #fff;
+  }
+  
+  .custom-legend {
+    text-align: right;
+    margin-bottom: 20px; /* Ajoute de la marge en bas pour espacer la légende du graphique */
+  
+    .legend-item {
+      display: inline-block;
+      margin-right: 10px;
+  
+      .legend-icon {
+        border-radius: 50%;
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        margin-right: 5px;
+      }
+    }
+  }
+  
+  .custom-bar-chart {
+    height: 350px;
+  }
+  
