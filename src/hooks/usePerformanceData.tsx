@@ -1,44 +1,33 @@
 import { useState, useEffect } from 'react';
+import { UserPerformance } from '../types/user';
+import { MOCK_USER_PERFORMANCE } from '../__mocks__/mockedData';
 
-interface PerformanceData {
-    value: number;
-    kind: string;
-}
-
-export const usePerformanceData = (userId: string) => {
-    const [data, setData] = useState<PerformanceData[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState<string>('');
+export const usePerformanceData = (userId: number) => {
+    const [data, setData] = useState<UserPerformance | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
             setIsLoading(true);
+            setError(null);
+
             try {
                 const response = await fetch(`http://localhost:3000/user/${userId}/performance`);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
+                if (!response.ok) throw new Error('Network response was not ok');
                 const result = await response.json();
-                const reorganizedData = result.data.data.map((item: { value: number; kind: number }) => {
-                    const kindMap: { [key: number]: string } = {
-                        1: 'Intensité',
-                        2: 'Vitesse',
-                        3: 'Force',
-                        4: 'Endurance',
-                        5: 'Énergie',
-                        6: 'Cardio'
-                    };
-                    return { 
-                        value: item.value, 
-                        kind: kindMap[item.kind] || 'Inconnu'
-                    };
-                }).sort((a: PerformanceData, b: PerformanceData) => {
-                    const order = ["Intensité", "Vitesse", "Force", "Endurance", "Énergie", "Cardio"];
-                    return order.indexOf(a.kind) - order.indexOf(b.kind);
-                });
-                setData(reorganizedData);
-            } catch (error) {
-                setError(error instanceof Error ? error.message : 'An unknown error occurred');
+                const apiData: UserPerformance = result.data;
+                console.log("API data:", apiData);
+                setData(apiData);
+            } catch (apiError) {
+                console.error("Error fetching performance data from API:", apiError);
+                const mockData = MOCK_USER_PERFORMANCE.find(performance => performance.userId === userId);
+                console.log("Mock data:", mockData);
+                if (mockData) {
+                    setData(mockData);
+                } else {
+                    setError("Performance data not found");
+                }
             } finally {
                 setIsLoading(false);
             }

@@ -21,18 +21,22 @@ interface CustomCursorProps {
 }
 
 const UserAverageSessionsChart: React.FC<UserAverageSessionsChartProps> = ({ userId }) => {
-  const { sessions, isLoading, error } = useAverageSessions(userId);
+  const numericUserId = parseInt(userId, 10); // Convert userId to number
+  const { data, isLoading, error } = useAverageSessions(numericUserId);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
+  if (!data || !data.sessions) return <div>No data available</div>;
+
+  const sessions = data.sessions;
 
   const dataWithLabels = sessions.map((session: Session) => ({
     ...session,
     dayLabel: days[session.day - 1]
   }));
 
-  const getMaxSessionLength = () => Math.max(...sessions.map(session => session.sessionLength));
-  const getMinSessionLength = () => Math.min(...sessions.map(session => session.sessionLength));
+  const getMaxSessionLength = () => Math.max(...sessions.map((session: Session) => session.sessionLength));
+  const getMinSessionLength = () => Math.min(...sessions.map((session: Session) => session.sessionLength));
 
   const maxSessionLength = getMaxSessionLength();
   const minSessionLength = getMinSessionLength();

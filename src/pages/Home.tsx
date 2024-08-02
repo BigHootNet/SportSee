@@ -12,10 +12,11 @@ import { UserParams } from '../types/user';
 
 const Home: React.FC = () => {
     const { userId } = useParams<UserParams>();
-    const { data, isLoading, error } = useUserData(userId || '');
+    const numericUserId = parseInt(userId || '0', 10);
+    const { data, isLoading, error } = useUserData(numericUserId);
     console.log(data);
 
-    const score = data?.score ?? data?.todayScore;
+    const score = data?.score ?? data?.todayScore ?? 0;
 
     return (
         <div className="content-container">
@@ -35,7 +36,7 @@ const Home: React.FC = () => {
                                 ) : (
                                     <>
                                         {error && error.trim() && !data && <div>Erreur: {error}</div>}
-                                        {score != null ? (
+                                        {data ? (
                                             <UserScoreCircleChart score={score} />
                                         ) : (
                                             <div>Données non trouvées</div>

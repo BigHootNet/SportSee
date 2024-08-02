@@ -1,35 +1,38 @@
 import React from 'react';
-import { ResponsiveContainer, RadialBarChart, RadialBar, Cell } from 'recharts';
+import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
 import '../styles/UserScoreCircleChart.scss';
-
-
 
 interface UserScoreCircleChartProps {
   score: number;
 }
 
 const UserScoreCircleChart: React.FC<UserScoreCircleChartProps> = ({ score }) => {
-  const data = [
-    { name: 'Score', value: score * 100 },
-    { name: 'Rest', value: 100 - score * 100 }
-  ];
+  const scoreData = [{ name: 'score', value: score }, { name: 'remainder', value: 1 - score }];
 
   return (
     <div className="radialBarChart graph">
+      <h2 className="chart-title">Score</h2>
       <ResponsiveContainer width="100%" height="100%">
-        <RadialBarChart innerRadius="70%" outerRadius="90%" data={data} startAngle={90} endAngle={450}>
-          <circle cx="50%" cy="50%" r="31%" fill="white" />
-          <RadialBar dataKey="value" cornerRadius={10}>
-            <Cell key="score" fill={'#E60000'} stroke="none" />
-            <Cell key="rest" fill="transparent" stroke="none" />
-          </RadialBar>
-          <text x="50%" y="45%" dy={5} textAnchor="middle">
-            <tspan className="radialBarChart-percentage">{`${Math.round(score * 100)}%`}</tspan>
-            <tspan x="50%" dy={20} className="radialBarChart-text">de votre</tspan>
-            <tspan x="50%" dy={20} className="radialBarChart-text">objectif</tspan>
-          </text>
-        </RadialBarChart>
+        <PieChart>
+          <Pie
+            data={scoreData}
+            dataKey="value"
+            startAngle={90}
+            endAngle={450}
+            innerRadius="70%"
+            outerRadius="80%"
+            fill="#FF0000"
+            stroke="none"
+          >
+            <Cell key="score" fill="#FF0000" />
+            <Cell key="remainder" fill="#FBFBFB" />
+          </Pie>
+        </PieChart>
       </ResponsiveContainer>
+      <div className="radialBarChart-label">
+        <p className="radialBarChart-percentage">{`${score * 100}%`}</p>
+        <p className="radialBarChart-text">de votre objectif</p>
+      </div>
     </div>
   );
 };

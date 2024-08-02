@@ -1,34 +1,58 @@
-// user.d.ts
-
-export interface KeyData {
+export interface UserParams {
+    [key: string]: string | undefined;
+    userId?: string;
+  }
+  
+  export interface KeyData {
     calorieCount: number;
     proteinCount: number;
     carbohydrateCount: number;
     lipidCount: number;
-}
-
-export interface UserInfo {
+  }
+  
+  export interface UserInfos {
     firstName: string;
     lastName: string;
     age: number;
-}
-
-export interface UserData {
+  }
+  
+  export interface UserMainData {
     id: number;
-    userInfos: UserInfo;
-    score?: number; // optional field in case score is used instead of todayScore
-    todayScore?: number; // optional field in case todayScore is used instead of score
+    userInfos: UserInfos;
+    todayScore?: number; // note the use of optional field
+    score?: number; // another optional field
     keyData: KeyData;
-}
-
-export interface UserActivityChartProps {
-    userId: string;
-}
-
-export interface SessionData {
+  }
+  
+  export interface ActivitySession {
     day: string;
     kilogram: number;
     calories: number;
-}
-
-export type UserParams = Record<string, string | undefined>;
+  }
+  
+  export interface UserActivity {
+    userId: number;
+    sessions: ActivitySession[];
+  }
+  
+  export interface AverageSession {
+    day: number;
+    sessionLength: number;
+  }
+  
+  export interface UserAverageSessions {
+    userId: number;
+    sessions: AverageSession[];
+  }
+  
+  export interface PerformanceData {
+    value: number;
+    kind: number;
+  }
+  
+  export interface UserPerformance {
+    userId: number;
+    kind: Record<number, string>;
+    data: PerformanceData[];
+  }
+  

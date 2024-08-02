@@ -1,44 +1,39 @@
 import { useState, useEffect } from 'react';
-import { UserData } from '../types/user';
+import { UserMainData } from '../types/user';
+import { MOCK_USER_MAIN_DATA } from '../__mocks__/mockedData';
 
-interface APIResponse {
-    data: UserData | null;
-    error: string;
-    isLoading: boolean;
-}
-
-export const useUserData = (userId: string): APIResponse  => {
-    const [data, setData] = useState<UserData | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState('');
+export const useUserData = (userId: number) => {
+    const [data, setData] = useState<UserMainData | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-
-        const controller = new AbortController();
-
         const fetchData = async () => {
             setIsLoading(true);
-            setError('');  // Réinitialiser l'erreur avant de commencer la récupération
+            setError(null);
+
             try {
-                const response = await fetch(`http://localhost:3000/user/${userId}`, { signal: controller.signal });
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                const response = await fetch(`http://localhost:3000/user/${userId}`);
+                if (!response.ok) throw new Error('Network response was not ok');
+                const result = await response.json();
+                const apiData: UserMainData = result.data;
+                console.log("API user data:", apiData);
+                setData(apiData);
+            } catch (apiError) {
+                console.error("Error fetching user data from API:", apiError);
+                const mockData = MOCK_USER_MAIN_DATA.find(user => user.id === userId);
+                console.log("Mock user data:", mockData);
+                if (mockData) {
+                    setData(mockData);
+                } else {
+                    setError("User data not found");
                 }
-                const jsonResponse: APIResponse = await response.json();
-                setData(jsonResponse.data);
-                setError(''); // Réinitialiser l'erreur après récupération réussie
-            } catch (error) {
-                setError('Failed to fetch data');
             } finally {
                 setIsLoading(false);
             }
         };
 
         fetchData();
-
-        return () => {
-            controller.abort();
-        };
     }, [userId]);
 
     return { data, isLoading, error };

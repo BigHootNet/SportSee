@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 function Login(): React.ReactElement {
     const allUsers = [
         { id: 12, firstName: 'Karl' },
+        { id: 13, firstName: 'Jane' },
         { id: 18, firstName: 'Cecilia' }
     ];
 

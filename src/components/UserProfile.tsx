@@ -6,15 +6,14 @@ interface UserProfileProps {
 }
 
 const UserProfile: React.FC<UserProfileProps> = ({ userId }) => {
-  const { data, isLoading, error } = useUserData(userId);
-
-
+  const numericUserId = parseInt(userId, 10); // Convert userId to number
+  const { data, isLoading, error } = useUserData(numericUserId);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
-  if (!data) return <div>No user data found</div>;
+  if (!data || !data.userInfos) return <div>No user data found</div>;
 
-  const { firstName} = data.userInfos;
+  const { firstName } = data.userInfos;
 
   return (
     <div>
