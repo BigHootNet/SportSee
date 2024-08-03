@@ -12,26 +12,26 @@ export const usePerformanceData = (userId: number) => {
             setIsLoading(true);
             setError(null);
 
-            let apiData: UserPerformance | null = null;
-            let mockData: UserPerformance | undefined = undefined;
+            // Vérifier les données mockées d'abord
+            const mockData = MOCK_USER_PERFORMANCE.find(performance => performance.userId === userId);
+            if (mockData) {
+                setData(mockData);
+                setIsLoading(false);
+                return;
+            }
 
+            // Si pas de données mockées, faire un fetch
             try {
                 const response = await fetch(`http://localhost:3000/user/${userId}/performance`);
                 if (response.ok) {
                     const result = await response.json();
-                    apiData = result.data;
-                }
-            } finally {
-                if (!apiData) {
-                    mockData = MOCK_USER_PERFORMANCE.find(performance => performance.userId === userId);
-                    if (mockData) {
-                        setData(mockData);
-                    } else {
-                        setError("Performance data not found");
-                    }
+                    setData(result.data);
                 } else {
-                    setData(apiData);
+                    setError("Performance data not found");
                 }
+            } catch (error) {
+                setError("Error fetching performance data");
+            } finally {
                 setIsLoading(false);
             }
         };
