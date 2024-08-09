@@ -1,0 +1,17 @@
+[
+    {
+        "id": 13,
+        "userInfos": {
+            "firstName": "Jane",
+            "lastName": "Doe",
+            "age": 28
+        },
+        "todayScore": 0.75,
+        "keyData": {
+            "calorieCount": 2100,
+            "proteinCount": 180,
+            "carbohydrateCount": 320,
+            "lipidCount": 70
+        }
+    }
+]

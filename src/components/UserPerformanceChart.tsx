@@ -1,6 +1,7 @@
 import React from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer } from 'recharts';
 import { usePerformanceData } from '../hooks/usePerformanceData';
+import { formatUserPerformanceData } from '../utils/formatData';
 import '../styles/UserPerformanceChart.scss';
 
 interface UserPerformanceChartProps {
@@ -8,23 +9,16 @@ interface UserPerformanceChartProps {
 }
 
 const UserPerformanceChart: React.FC<UserPerformanceChartProps> = ({ userId }) => {
-    const numericUserId = parseInt(userId, 10); // Convert userId to number
+    const numericUserId = parseInt(userId, 10);
     const { data, isLoading, error } = usePerformanceData(numericUserId);
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
 
-    console.log("Performance data:", data);
-
     if (!data || !Array.isArray(data.data)) return <div>No data available</div>;
 
-    // Format the data to be compatible with the RadarChart
-    const formattedData = data.data.map((item) => ({
-        ...item,
-        kind: data.kind[item.kind],
-    }));
-
-    console.log("Formatted data:", formattedData);
+    // Utilisation des données formatées
+    const formattedData = formatUserPerformanceData(data);
 
     return (
         <div className="radarChart graph">

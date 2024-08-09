@@ -7,12 +7,6 @@ interface UserActivityChartProps {
   userId: string;
 }
 
-interface SessionData {
-  day: string;
-  kilogram: number;
-  calories: number;
-}
-
 interface CustomLegendPayload {
   color?: string;
   value: string | number;
@@ -36,29 +30,24 @@ const CustomLegend: React.FC<LegendProps> = ({ payload }) => {
 const CustomTooltip: React.FC<TooltipProps<number, string>> = ({ active, payload }) => {
   if (active && payload && payload.length) {
     return (
-      <div className="barChart-tooltip">
-        <p>{`${payload[0].value}Kg`}</p>
-        <p>{`${payload[1].value}Kcal`}</p>
+      <div className="custom-tooltip" style={{ backgroundColor: '#FF0000', padding: '10px', borderRadius: '5px', color: '#FFFFFF' }}>
+        <p>{`${payload[0].value} kg`}</p>
+        <p>{`${payload[1].value} kCal`}</p>
       </div>
     );
   }
+
   return null;
 };
 
 const UserActivityChart: React.FC<UserActivityChartProps> = ({ userId }) => {
-  const numericUserId = parseInt(userId, 10); // Convert userId to number
-  const { data, isLoading, error } = useUserActivity(numericUserId);
+  const { data, isLoading, error } = useUserActivity(parseInt(userId, 10));
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
   if (!data || !data.sessions) return <div>No data available</div>;
 
   const sessions = data.sessions;
-
-  const modifiedSessions: SessionData[] = sessions.map((session) => ({
-    ...session,
-    day: session.day.split('-')[2],
-  }));
 
   const minKilogram = Math.min(...sessions.map(session => session.kilogram)) - 2;
   const maxKilogram = Math.max(...sessions.map(session => session.kilogram)) + 2;
@@ -73,7 +62,7 @@ const UserActivityChart: React.FC<UserActivityChartProps> = ({ userId }) => {
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             layout="horizontal"
-            data={modifiedSessions}
+            data={sessions} // Utilisation des données formatées
             barCategoryGap="40%"
             barGap={0}
             margin={{ top: 20, left: 10, bottom: 30, right: 10 }}
