@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { UserActivity } from '../types/user';
-import { MOCK_USER_ACTIVITY } from '../__mocks__/mockedData';
+import mockData from '../__mocks__/mockedData.json';
 import { formatUserActivity } from '../utils/formatData';
 
 export const useUserActivity = (userId: number) => {
@@ -14,26 +14,31 @@ export const useUserActivity = (userId: number) => {
             setError(null);
 
             try {
+                let activityData: UserActivity | undefined;
+
                 // Vérifier les données mockées d'abord
-                const mockData = MOCK_USER_ACTIVITY.find(activity => activity.userId === userId);
-                if (mockData) {
-                    const formattedData = formatUserActivity([mockData]);
-                    setData(formattedData[0]);
-                    setIsLoading(false);
-                    return;
+                const mockDataArray = mockData as Array<UserActivity | { userId: number }>;
+                activityData = mockDataArray.find(item => 'userId' in item && item.userId === userId) as UserActivity;
+
+                if (!activityData) {
+                    // Si pas de données mockées, faire un fetch
+                    const response = await fetch(`http://localhost:3000/user/${userId}/activity`);
+                    if (response.ok) {
+                        const result = await response.json();
+                        activityData = result.data;
+                    } else {
+                        setError("Activity data not found");
+                        return;
+                    }
                 }
 
-                // Si pas de données mockées, faire un fetch
-                const response = await fetch(`http://localhost:3000/user/${userId}/activity`);
-                if (response.ok) {
-                    const result = await response.json();
-                    const formattedData = formatUserActivity([result.data]);
+                // Formater et afficher les données
+                if (activityData) {
+                    const formattedData = formatUserActivity([activityData]);
                     setData(formattedData[0]);
-                } else {
-                    setError("User activity not found");
                 }
             } catch (error) {
-                setError("Error fetching user activity");
+                setError("Error fetching activity data");
             } finally {
                 setIsLoading(false);
             }
@@ -44,3 +49,6 @@ export const useUserActivity = (userId: number) => {
 
     return { data, isLoading, error };
 };
+
+
+export default useUserActivity;

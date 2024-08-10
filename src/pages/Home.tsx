@@ -14,7 +14,6 @@ const Home: React.FC = () => {
     const { userId } = useParams<UserParams>();
     const numericUserId = parseInt(userId || '0', 10);
     const { data, isLoading, error } = useUserData(numericUserId);
-    console.log(data);
 
     const score = data?.score ?? data?.todayScore ?? 0;
 

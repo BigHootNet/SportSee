@@ -2,7 +2,7 @@ import { UserMainData, UserActivity, UserAverageSessions, UserPerformance } from
 
 // Formatage des données principales de l'utilisateur
 export const formatUserMainData = (data: UserMainData[]): UserMainData[] => {
-    return data.map((item: UserMainData) => ({
+    return data.map((item) => ({
         id: item.id,
         userInfos: {
             firstName: item.userInfos.firstName,
@@ -21,25 +21,34 @@ export const formatUserMainData = (data: UserMainData[]): UserMainData[] => {
 
 // Formatage des données d'activité utilisateur
 export const formatUserActivity = (data: UserActivity[]): UserActivity[] => {
-    return data.map((item: UserActivity) => ({
+    return data.map((item) => ({
         userId: item.userId,
         sessions: item.sessions.map((session) => ({
-            day: session.day.split('-')[2],
+            day: session.day,  // Directement utiliser si 'day' est déjà un nombre
             kilogram: session.kilogram,
             calories: session.calories,
         }))
     }));
 };
 
-// Formatage des données de sessions moyennes de l'utilisateur
-export const formatUserAverageSessions = (data: UserAverageSessions[]): UserAverageSessions[] => {
-    return data.map((item: UserAverageSessions) => ({
-        userId: item.userId,
-        sessions: item.sessions.map((session) => ({
-            day: session.day,
-            sessionLength: session.sessionLength
-        }))
-    }));
+export const formatUserAverageSessions = (data: { userId: number; sessions?: { day: number; sessionLength: number }[]; averageSessions?: { day: string; sessionLength: number }[] }[]): UserAverageSessions[] => {
+
+    return data.map(item => {
+        const sessions = item.averageSessions
+            ? item.averageSessions.map(session => ({
+                day: parseInt(session.day, 10),
+                sessionLength: session.sessionLength
+            }))
+            : item.sessions?.map(session => ({
+                day: session.day,
+                sessionLength: session.sessionLength
+            })) || [];
+
+        return {
+            userId: item.userId,
+            sessions
+        };
+    });
 };
 
 // Formatage des données des sessions moyennes avec labels
@@ -48,7 +57,7 @@ const days = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
 export const formatUserAverageSessionsData = (data: UserAverageSessions) => {
     const sessionsWithLabels = data.sessions.map(session => ({
         ...session,
-        dayLabel: days[session.day - 1],
+        dayLabel: days[session.day - 1],  // Convertir le jour numérique en jour de la semaine
     }));
 
     const maxSessionLength = Math.max(...sessionsWithLabels.map(session => session.sessionLength));
@@ -63,7 +72,7 @@ export const formatUserAverageSessionsData = (data: UserAverageSessions) => {
 
 // Formatage des performances utilisateur
 export const formatUserPerformance = (data: UserPerformance[]): UserPerformance[] => {
-    return data.map((item: UserPerformance) => ({
+    return data.map((item) => ({
         userId: item.userId,
         kind: item.kind,
         data: item.data.map((dataPoint) => ({

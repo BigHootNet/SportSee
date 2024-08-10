@@ -1,6 +1,6 @@
 import React from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, ResponsiveContainer } from 'recharts';
-import { usePerformanceData } from '../hooks/usePerformanceData';
+import usePerformanceData from '../hooks/usePerformanceData';
 import { formatUserPerformanceData } from '../utils/formatData';
 import '../styles/UserPerformanceChart.scss';
 

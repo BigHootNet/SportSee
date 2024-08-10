@@ -13,5 +13,48 @@
             "carbohydrateCount": 320,
             "lipidCount": 70
         }
+    },
+    {
+        "userId": 13,
+        "sessions": [
+            { "day": "2023-01-01", "kilogram": 70, "calories": 200 },
+            { "day": "2023-01-01", "kilogram": 72, "calories": 250 },
+            { "day": "2023-01-01", "kilogram": 71, "calories": 500 },
+            { "day": "2023-01-01", "kilogram": 69, "calories": 350 },
+            { "day": "2023-01-01", "kilogram": 72, "calories": 40 },
+            { "day": "2023-01-01", "kilogram": 71, "calories": 150 },
+            { "day": "2023-01-02", "kilogram": 72, "calories": 320 }
+        ]
+    },
+    {
+        "userId": 13,
+        "kind": {
+            "1": "cardio",
+            "2": "energy",
+            "3": "endurance",
+            "4": "strength",
+            "5": "speed",
+            "6": "intensity"
+        },
+        "data": [
+            { "value": 80, "kind": 1 },
+            { "value": 120, "kind": 2 },
+            { "value": 100, "kind": 3 },  
+            { "value": 90, "kind": 4 },
+            { "value": 110, "kind": 5 }, 
+            { "value": 130, "kind": 6 }   
+        ]
+    },
+    {
+        "userId": 13,
+        "averageSessions": [
+            { "day": "1", "sessionLength": 0 },
+            { "day": "2", "sessionLength": 50 },
+            { "day": "3", "sessionLength": 60 },
+            { "day": "4", "sessionLength": 70 },
+            { "day": "5", "sessionLength": 25 },
+            { "day": "6", "sessionLength": 30 },
+            { "day": "7", "sessionLength": 75 }
+        ]
     }
 ]
